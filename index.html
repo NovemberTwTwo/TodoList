@@ -17,21 +17,11 @@
         <section class="formSection">
           <form action="submit" id="todoForm">
             <label for="textInput">What purpose</label>
-            <input
-              type="text"
-              name="purpose"
-              id="textInput"
-              value="test-purpose"
-            />
+            <input type="text" name="purpose" id="textInput" required />
             <div>
               <div>
                 <label for="startDateInput">Start</label>
-                <input
-                  type="date"
-                  name="start"
-                  id="startDateInput"
-                  value="2022-01-01"
-                />
+                <input type="date" name="start" id="startDateInput" required />
               </div>
               <div>
                 <label for="deadlineDateInput">Deadline</label>
@@ -39,7 +29,7 @@
                   type="date"
                   name="deadline"
                   id="deadlineDateInput"
-                  value="2022-02-02"
+                  required
                 />
               </div>
             </div>

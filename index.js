@@ -7,19 +7,34 @@ class Todo {
   }
 }
 
-const todos = [];
-const todosBefore = [];
+let todos = [];
 
 const form = document.getElementById('todoForm');
 const list = document.getElementById('todoList');
 
+const startDateInput = document.getElementById('startDateInput');
+const deadlineDateInput = document.getElementById('deadlineDateInput');
+
+startDateInput.addEventListener('change', (event) => {
+  if (event.target.value != null)
+    deadlineDateInput.setAttribute('min', event.target.value);
+});
+
+deadlineDateInput.addEventListener('change', (event) => {
+  if (event.target.value != null)
+    startDateInput.setAttribute('max', event.target.value);
+});
+
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   const formData = new FormData(form);
+
   const newData = new Todo();
   for (const [key, value] of formData.entries()) newData[key] = value;
   todos.push(newData);
   todoGenerator(newData);
+
+  form.reset();
 });
 
 const todoGenerator = (todo) => {
@@ -57,6 +72,21 @@ const todoGenerator = (todo) => {
 
   dateBlock.appendChild(startDateBlock);
   dateBlock.appendChild(deadlineDateBlock);
+
+  const deleteButton = document.createElement('button');
+  deleteButton.setAttribute('class', 'deleteButton');
+  deleteButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    const selectedTodo = document.querySelector(`div[key="${todo.key}"]`);
+    list.removeChild(selectedTodo);
+    todos = todos.filter((v) => {
+      const { key } = v;
+      return key == todo.key ? false : true;
+    });
+  });
+  deleteButton.innerHTML = 'X';
+
+  purposeBlock.appendChild(deleteButton);
 
   block.appendChild(purposeBlock);
   block.appendChild(document.createElement('hr'));
